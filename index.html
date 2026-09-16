@@ -237,7 +237,8 @@
         .table-wrapper {
             border: 1px solid #cdd1d9;
             border-radius: 5px;
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             background-color: #ffffff;
         }
@@ -251,23 +252,38 @@
         thead {
             background-color: #d9dce2;
             border-bottom: 1px solid #c1c5ce;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         th {
-            padding: 14px 16px;
+            padding: 12px 10px;
             text-align: left;
-            font-weight: 500;
-            font-size: 13px;
+            font-weight: 600;
+            font-size: 11px;
             color: #5a5f67;
             text-transform: uppercase;
             letter-spacing: 0.4px;
+            white-space: nowrap;
+            border-right: 1px solid #c1c5ce;
+        }
+
+        th:last-child {
+            border-right: none;
         }
 
         td {
-            padding: 14px 16px;
+            padding: 12px 10px;
             border-bottom: 1px solid #f0f1f3;
-            font-size: 14px;
+            border-right: 1px solid #f0f1f3;
+            font-size: 13px;
             color: #4a4a4a;
+            max-width: 200px;
+        }
+
+        td:last-child {
+            border-right: none;
         }
 
         tbody tr {
@@ -280,172 +296,27 @@
             cursor: pointer;
         }
 
-        .type-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 4px;
+        .cell-code {
+            font-family: 'Courier New', monospace;
+            background-color: #f0f1f3;
+            padding: 6px 8px;
+            border-radius: 3px;
             font-size: 12px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            word-break: break-all;
+            max-width: 300px;
+            overflow: auto;
         }
 
-        .type-program {
-            background-color: #d9dce2;
-            color: #5a5f67;
-            border: 1px solid #c1c5ce;
-        }
-
-        .type-job {
-            background-color: #d4d7dd;
+        .cell-notes {
             color: #555960;
-            border: 1px solid #b8bcc6;
-        }
-
-        .type-file {
-            background-color: #d9dce2;
-            color: #5a5f67;
-            border: 1px solid #c1c5ce;
-        }
-
-        .type-schedule {
-            background-color: #d4d7dd;
-            color: #555960;
-            border: 1px solid #b8bcc6;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 4px;
             font-size: 12px;
+            line-height: 1.4;
+            max-width: 250px;
+        }
+
+        .cell-link {
+            color: #6b7581;
             font-weight: 500;
-        }
-
-        .status-active {
-            background-color: #d4dcd2;
-            color: #5a6b59;
-        }
-
-        .status-running {
-            background-color: #d9d4c2;
-            color: #696145;
-        }
-
-        .status-linked {
-            background-color: #d0d9de;
-            color: #5a6577;
-        }
-
-        .status-completed {
-            background-color: #d4d4d4;
-            color: #555555;
-        }
-
-        .action-btn {
-            padding: 6px 14px;
-            background-color: #6b7581;
-            color: #e8e9eb;
-            border: 1px solid #5a6370;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .action-btn:hover {
-            background-color: #5a6370;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
-        }
-
-        /* DETAILS PANEL */
-        .details-panel {
-            background-color: #e8e9eb;
-            border: 1px solid #cdd1d9;
-            border-radius: 5px;
-            padding: 20px;
-            margin-top: 25px;
-            display: none;
-        }
-
-        .details-panel.active {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .details-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #d4d7dd;
-            padding-bottom: 15px;
-        }
-
-        .details-title {
-            font-size: 18px;
-            font-weight: 500;
-            color: #3d3f45;
-        }
-
-        .details-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #9ca3af;
-            transition: color 0.2s ease;
-        }
-
-        .details-close:hover {
-            color: #4a4a4a;
-        }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-        }
-
-        .detail-item {
-            background-color: #f5f6f8;
-            padding: 15px;
-            border-radius: 4px;
-            border-left: 3px solid #8b9299;
-        }
-
-        .detail-item-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #6b7280;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .detail-item-value {
-            font-size: 16px;
-            font-weight: 500;
-            color: #3d3f45;
-        }
-
-        .detail-item-secondary {
-            font-size: 13px;
-            color: #9ca3af;
-            margin-top: 6px;
         }
 
         /* EMPTY STATE */
@@ -471,6 +342,129 @@
             color: #b0b5be;
         }
 
+        /* DETAILS MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: #f0f1f3;
+            padding: 30px;
+            border-radius: 6px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #d4d7dd;
+            padding-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #3d3f45;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: #4a4a4a;
+        }
+
+        .modal-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .modal-item {
+            background-color: #e8e9eb;
+            padding: 16px;
+            border-radius: 5px;
+            border-left: 3px solid #8b9299;
+        }
+
+        .modal-item-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-item-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #3d3f45;
+            word-break: break-word;
+        }
+
+        .modal-code {
+            background-color: #e8e9eb;
+            padding: 16px;
+            border-radius: 5px;
+            border-left: 3px solid #8b9299;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #3d3f45;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-top: 16px;
+            grid-column: 1 / -1;
+        }
+
         /* SCROLL BAR STYLING */
         .main-content::-webkit-scrollbar {
             width: 8px;
@@ -487,6 +481,19 @@
 
         .main-content::-webkit-scrollbar-thumb:hover {
             background: #a8adb7;
+        }
+
+        .table-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #e8e9eb;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #b8bcc6;
+            border-radius: 4px;
         }
 
         /* RESPONSIVENESS */
@@ -516,7 +523,22 @@
                 gap: 10px;
             }
 
-            .details-grid {
+            th {
+                font-size: 10px;
+                padding: 8px 6px;
+            }
+
+            td {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .modal-body {
                 grid-template-columns: 1fr;
             }
         }
@@ -547,7 +569,7 @@
                 <div class="search-container">
                     <div class="search-input-wrapper">
                         <span class="search-icon">🔍</span>
-                        <input type="text" class="search-input" placeholder="Enter Program, Job, or File name..." id="searchInput">
+                        <input type="text" class="search-input" placeholder="Enter Program, Job, or File name..." id="searchInput" onkeypress="if(event.key==='Enter') performSearch()">
                     </div>
                     <button class="search-btn" onclick="performSearch()">Search</button>
                 </div>
@@ -569,10 +591,6 @@
                         <input type="checkbox" id="filter-file" checked>
                         <label for="filter-file">Files</label>
                     </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="filter-schedule" checked>
-                        <label for="filter-schedule">ESP Schedules</label>
-                    </div>
                 </div>
             </div>
 
@@ -593,11 +611,15 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th>Last Updated</th>
-                                <th>Action</th>
+                                <th>JCL Name</th>
+                                <th>Step</th>
+                                <th>Program</th>
+                                <th>Input File Name</th>
+                                <th>Output File Name</th>
+                                <th>DD Name</th>
+                                <th>Output Used In</th>
+                                <th>Input/Output Notes</th>
+                                <th>JCL Code</th>
                             </tr>
                         </thead>
                         <tbody id="resultsTable">
@@ -605,81 +627,83 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- DETAILS PANEL -->
-            <div class="details-panel" id="detailsPanel">
-                <div class="details-header">
-                    <div class="details-title" id="detailsTitle">Application Details</div>
-                    <button class="details-close" onclick="closeDetails()">✕</button>
-                </div>
-                <div class="details-grid" id="detailsGrid">
-                </div>
+    <!-- DETAILS MODAL -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Details</div>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
             </div>
         </div>
     </div>
 
     <script>
-        // Sample Data
+        // Sample Data with detailed JCL information
         const sampleData = [
             {
                 id: 1,
-                name: 'PROG_001',
-                type: 'Program',
-                status: 'Active',
-                lastUpdated: '2026-01-15',
-                jobs: 5,
-                files: 12,
-                espStatus: 'Running'
+                jclName: 'ABCWORK',
+                step: 'STEP020',
+                program: 'ABC1PGM',
+                inputFile: 'ABC.DEF.FILE',
+                outputFile: 'XYZ.OUTPUT.FILE',
+                ddName: 'INFILE',
+                outputUsedIn: 'STEP030',
+                notes: 'This program processes input file, sorts to create output file',
+                jclCode: '//STEP020 EXEC PGM=ABC1PGM\n//INFILE DD DSN=ABC.DEF.FILE,DISP=SHR\n//OUTFILE DD DSN=XYZ.OUTPUT.FILE,DISP=(NEW,CATLG)'
             },
             {
                 id: 2,
-                name: 'JOB_002',
-                type: 'Job',
-                status: 'Active',
-                lastUpdated: '2026-01-14',
-                jobs: '-',
-                files: 8,
-                espStatus: 'Scheduled'
+                jclName: 'ABCWORK',
+                step: 'STEP030',
+                program: 'SORTPGM',
+                inputFile: 'XYZ.OUTPUT.FILE',
+                outputFile: 'FINAL.SORTED.FILE',
+                ddName: 'SORTIN',
+                outputUsedIn: 'STEP040',
+                notes: 'Sorts the output from STEP020 by transaction ID and date',
+                jclCode: '//STEP030 EXEC PGM=SORT\n//SORTIN DD DSN=XYZ.OUTPUT.FILE,DISP=SHR\n//SORTOUT DD DSN=FINAL.SORTED.FILE,DISP=(NEW,CATLG)'
             },
             {
                 id: 3,
-                name: 'FILE_DATA_CONFIG',
-                type: 'File',
-                status: 'Linked',
-                lastUpdated: '2026-01-13',
-                jobs: 3,
-                files: '-',
-                espStatus: 'Active'
+                jclName: 'DATARPT',
+                step: 'STEP010',
+                program: 'DATAPROG',
+                inputFile: 'DATA.INPUT.FILE',
+                outputFile: 'REPORT.OUTPUT',
+                ddName: 'INPUT',
+                outputUsedIn: 'STEP020',
+                notes: 'Extracts and transforms data from input file for reporting',
+                jclCode: '//STEP010 EXEC PGM=DATAPROG\n//INPUT DD DSN=DATA.INPUT.FILE,DISP=SHR\n//OUTPUT DD DSN=REPORT.OUTPUT,DISP=(NEW,CATLG)'
             },
             {
                 id: 4,
-                name: 'PROG_002',
-                type: 'Program',
-                status: 'Active',
-                lastUpdated: '2026-01-12',
-                jobs: 7,
-                files: 15,
-                espStatus: 'Completed'
+                jclName: 'DATARPT',
+                step: 'STEP020',
+                program: 'RPTGEN',
+                inputFile: 'REPORT.OUTPUT',
+                outputFile: 'FINAL.REPORT.PDF',
+                ddName: 'RPTINPUT',
+                outputUsedIn: 'Archive',
+                notes: 'Generates final PDF report from processed data',
+                jclCode: '//STEP020 EXEC PGM=RPTGEN\n//RPTINPUT DD DSN=REPORT.OUTPUT,DISP=SHR\n//RPTOUTPUT DD DSN=FINAL.REPORT.PDF,DISP=(NEW,CATLG)'
             },
             {
                 id: 5,
-                name: 'JOB_003',
-                type: 'Job',
-                status: 'Running',
-                lastUpdated: '2026-01-16',
-                jobs: '-',
-                files: 5,
-                espStatus: 'Running'
-            },
-            {
-                id: 6,
-                name: 'FILE_SCHEDULE_001',
-                type: 'File',
-                status: 'Completed',
-                lastUpdated: '2026-01-11',
-                jobs: 2,
-                files: '-',
-                espStatus: 'Completed'
+                jclName: 'BATCH001',
+                step: 'STEP050',
+                program: 'VALIDATE',
+                inputFile: 'BATCH.DATA.FILE',
+                outputFile: 'VALIDATED.DATA',
+                ddName: 'INDATA',
+                outputUsedIn: 'STEP060',
+                notes: 'Validates batch data and creates error report if needed',
+                jclCode: '//STEP050 EXEC PGM=VALIDATE\n//INDATA DD DSN=BATCH.DATA.FILE,DISP=SHR\n//OUTDATA DD DSN=VALIDATED.DATA,DISP=(NEW,CATLG)'
             }
         ];
 
@@ -688,14 +712,18 @@
             const filters = {
                 program: document.getElementById('filter-program').checked,
                 job: document.getElementById('filter-job').checked,
-                file: document.getElementById('filter-file').checked,
-                schedule: document.getElementById('filter-schedule').checked
+                file: document.getElementById('filter-file').checked
             };
 
             let results = sampleData.filter(item => {
-                const matchesSearch = item.name.toLowerCase().includes(searchTerm);
-                const typeKey = item.type.toLowerCase();
-                return matchesSearch && filters[typeKey];
+                const matchesSearch = 
+                    item.jclName.toLowerCase().includes(searchTerm) ||
+                    item.program.toLowerCase().includes(searchTerm) ||
+                    item.inputFile.toLowerCase().includes(searchTerm) ||
+                    item.outputFile.toLowerCase().includes(searchTerm) ||
+                    item.step.toLowerCase().includes(searchTerm);
+                
+                return matchesSearch;
             });
 
             displayResults(results);
@@ -723,12 +751,21 @@
             results.forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td><strong>${item.name}</strong></td>
-                    <td><span class="type-badge type-${item.type.toLowerCase()}">${item.type}</span></td>
-                    <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span></td>
-                    <td>${item.lastUpdated}</td>
-                    <td><button class="action-btn" onclick="showDetails(${item.id})">View Details</button></td>
+                    <td><strong>${item.jclName}</strong></td>
+                    <td>${item.step}</td>
+                    <td>${item.program}</td>
+                    <td>${item.inputFile}</td>
+                    <td>${item.outputFile}</td>
+                    <td>${item.ddName}</td>
+                    <td><span class="cell-link">${item.outputUsedIn}</span></td>
+                    <td><span class="cell-notes">${item.notes}</span></td>
+                    <td><button class="action-btn" onclick="showDetails(${item.id})" style="padding: 6px 10px; font-size: 12px;">View Code</button></td>
                 `;
+                row.onclick = (e) => {
+                    if (e.target.tagName !== 'BUTTON') {
+                        showDetails(item.id);
+                    }
+                };
                 tableBody.appendChild(row);
             });
         }
@@ -737,58 +774,69 @@
             const item = sampleData.find(d => d.id === id);
             if (!item) return;
 
-            const detailsPanel = document.getElementById('detailsPanel');
-            const detailsTitle = document.getElementById('detailsTitle');
-            const detailsGrid = document.getElementById('detailsGrid');
+            const modal = document.getElementById('detailsModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
 
-            detailsTitle.textContent = `${item.name} - ${item.type} Details`;
+            modalTitle.textContent = `${item.jclName} - ${item.step}`;
 
-            detailsGrid.innerHTML = `
-                <div class="detail-item">
-                    <div class="detail-item-label">Name</div>
-                    <div class="detail-item-value">${item.name}</div>
+            modalBody.innerHTML = `
+                <div class="modal-item">
+                    <div class="modal-item-label">JCL Name</div>
+                    <div class="modal-item-value">${item.jclName}</div>
                 </div>
-                <div class="detail-item">
-                    <div class="detail-item-label">Type</div>
-                    <div class="detail-item-value">${item.type}</div>
+                <div class="modal-item">
+                    <div class="modal-item-label">Step</div>
+                    <div class="modal-item-value">${item.step}</div>
                 </div>
-                <div class="detail-item">
-                    <div class="detail-item-label">Status</div>
-                    <div class="detail-item-value">${item.status}</div>
+                <div class="modal-item">
+                    <div class="modal-item-label">Program</div>
+                    <div class="modal-item-value">${item.program}</div>
                 </div>
-                <div class="detail-item">
-                    <div class="detail-item-label">Last Updated</div>
-                    <div class="detail-item-value">${item.lastUpdated}</div>
-                    <div class="detail-item-secondary">2 days ago</div>
+                <div class="modal-item">
+                    <div class="modal-item-label">Input File Name</div>
+                    <div class="modal-item-value">${item.inputFile}</div>
                 </div>
-                ${item.jobs !== '-' ? `
-                <div class="detail-item">
-                    <div class="detail-item-label">Associated Jobs</div>
-                    <div class="detail-item-value">${item.jobs}</div>
+                <div class="modal-item">
+                    <div class="modal-item-label">Output File Name</div>
+                    <div class="modal-item-value">${item.outputFile}</div>
                 </div>
-                ` : ''}
-                ${item.files !== '-' ? `
-                <div class="detail-item">
-                    <div class="detail-item-label">Files Used</div>
-                    <div class="detail-item-value">${item.files}</div>
+                <div class="modal-item">
+                    <div class="modal-item-label">DD Name</div>
+                    <div class="modal-item-value">${item.ddName}</div>
                 </div>
-                ` : ''}
-                <div class="detail-item">
-                    <div class="detail-item-label">ESP Schedule Status</div>
-                    <div class="detail-item-value">${item.espStatus}</div>
+                <div class="modal-item">
+                    <div class="modal-item-label">Output Used In</div>
+                    <div class="modal-item-value">${item.outputUsedIn}</div>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-item-label">Input/Output Notes</div>
+                    <div class="modal-item-value">${item.notes}</div>
+                </div>
+                <div class="modal-code">
+                    <div class="modal-item-label" style="margin-bottom: 12px;">JCL Code</div>
+                    ${item.jclCode}
                 </div>
             `;
 
-            detailsPanel.classList.add('active');
+            modal.classList.add('active');
         }
 
-        function closeDetails() {
-            const detailsPanel = document.getElementById('detailsPanel');
-            detailsPanel.classList.remove('active');
+        function closeModal() {
+            const modal = document.getElementById('detailsModal');
+            modal.classList.remove('active');
         }
 
         function showAnalysis(type) {
-            alert(`${type === 'component' ? 'Component' : 'ESP'} Analysis feature will be implemented soon!\n\nThis will show ${type === 'component' ? 'program → job → file relationships' : 'ESP schedule timeline and execution history'}`);
+            alert(`${type === 'component' ? 'Component' : 'ESP'} Analysis feature will be implemented soon!\n\nThis will show ${type === 'component' ? 'program → job → file relationships and data flow' : 'ESP schedule timeline and execution history'}`);
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailsModal');
+            if (event.target === modal) {
+                closeModal();
+            }
         }
 
         // Initialize with empty state
