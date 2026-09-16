@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Search Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 20px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        /* LEFT SIDEBAR */
+        .sidebar {
+            width: 220px;
+            background-color: #f5f5f5;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-analysis {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+        }
+
+        .btn-component {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .btn-component:hover {
+            background-color: #0052a3;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-esp {
+            background-color: #6f42c1;
+            color: white;
+        }
+
+        .btn-esp:hover {
+            background-color: #5a32a3;
+            box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: #ffffff;
+        }
+
+        .search-section {
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 16px;
+        }
+
+        .search-btn {
+            padding: 12px 24px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #0052a3;
+        }
+
+        /* FILTERS */
+        .filters-section {
+            background-color: #f8f9fa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+
+        .filters-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .filter-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #0066cc;
+        }
+
+        .filter-option label {
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* RESULTS TABLE */
+        .results-section {
+            margin-top: 25px;
+        }
+
+        .results-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .results-count {
+            background-color: #e8f4fd;
+            color: #0066cc;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        th {
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .type-program {
+            background-color: #e8f4fd;
+            color: #0066cc;
+        }
+
+        .type-job {
+            background-color: #f0e8fd;
+            color: #6f42c1;
+        }
+
+        .type-file {
+            background-color: #e8fdf0;
+            color: #28a745;
+        }
+
+        .type-schedule {
+            background-color: #fde8e8;
+            color: #dc3545;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-running {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-linked {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-completed {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #0052a3;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 102, 204, 0.2);
+        }
+
+        /* DETAILS PANEL */
+        .details-panel {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 25px;
+            display: none;
+        }
+
+        .details-panel.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 15px;
+        }
+
+        .details-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .details-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s ease;
+        }
+
+        .details-close:hover {
+            color: #333;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #0066cc;
+        }
+
+        .detail-item-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-item-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .detail-item-secondary {
+            font-size: 13px;
+            color: #999;
+            margin-top: 6px;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .empty-subtext {
+            font-size: 13px;
+            color: #bbb;
+        }
+
+        /* RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                height: auto;
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .btn-analysis {
+                flex: 1;
+            }
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .filter-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <h1>🔍 Program Search Portal</h1>
+    </div>
+
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-title">Analysis Tools</div>
+            <button class="btn-analysis btn-component" onclick="showAnalysis('component')">
+                📊 Component Analysis
+            </button>
+            <button class="btn-analysis btn-esp" onclick="showAnalysis('esp')">
+                📅 ESP Analysis
+            </button>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- SEARCH SECTION -->
+            <div class="search-section">
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="Enter Program, Job, or File name..." id="searchInput">
+                    </div>
+                    <button class="search-btn" onclick="performSearch()">Search</button>
+                </div>
+            </div>
+
+            <!-- FILTERS -->
+            <div class="filters-section">
+                <div class="filters-title">Filter By Type</div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="filter-program" checked>
+                        <label for="filter-program">Programs</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="filter-job" checked>
+                        <label for="filter-job">Jobs</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="filter-file" checked>
+                        <label for="filter-file">Files</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="filter-schedule" checked>
+                        <label for="filter-schedule">ESP Schedules</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULTS TABLE -->
+            <div class="results-section">
+                <div class="results-title">
+                    Search Results
+                    <span class="results-count" id="resultCount">0 Results</span>
+                </div>
+
+                <div id="emptyState" class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <div class="empty-text">No results yet</div>
+                    <div class="empty-subtext">Try entering a Program, Job, or File name to search</div>
+                </div>
+
+                <div class="table-wrapper" id="tableWrapper" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Last Updated</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- DETAILS PANEL -->
+            <div class="details-panel" id="detailsPanel">
+                <div class="details-header">
+                    <div class="details-title" id="detailsTitle">Program Details</div>
+                    <button class="details-close" onclick="closeDetails()">✕</button>
+                </div>
+                <div class="details-grid" id="detailsGrid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Data
+        const sampleData = [
+            {
+                id: 1,
+                name: 'PROG_001',
+                type: 'Program',
+                status: 'Active',
+                lastUpdated: '2026-01-15',
+                jobs: 5,
+                files: 12,
+                espStatus: 'Running'
+            },
+            {
+                id: 2,
+                name: 'JOB_002',
+                type: 'Job',
+                status: 'Active',
+                lastUpdated: '2026-01-14',
+                jobs: '-',
+                files: 8,
+                espStatus: 'Scheduled'
+            },
+            {
+                id: 3,
+                name: 'FILE_DATA_CONFIG',
+                type: 'File',
+                status: 'Linked',
+                lastUpdated: '2026-01-13',
+                jobs: 3,
+                files: '-',
+                espStatus: 'Active'
+            },
+            {
+                id: 4,
+                name: 'PROG_002',
+                type: 'Program',
+                status: 'Active',
+                lastUpdated: '2026-01-12',
+                jobs: 7,
+                files: 15,
+                espStatus: 'Completed'
+            },
+            {
+                id: 5,
+                name: 'JOB_003',
+                type: 'Job',
+                status: 'Running',
+                lastUpdated: '2026-01-16',
+                jobs: '-',
+                files: 5,
+                espStatus: 'Running'
+            },
+            {
+                id: 6,
+                name: 'FILE_SCHEDULE_001',
+                type: 'File',
+                status: 'Completed',
+                lastUpdated: '2026-01-11',
+                jobs: 2,
+                files: '-',
+                espStatus: 'Completed'
+            }
+        ];
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filters = {
+                program: document.getElementById('filter-program').checked,
+                job: document.getElementById('filter-job').checked,
+                file: document.getElementById('filter-file').checked,
+                schedule: document.getElementById('filter-schedule').checked
+            };
+
+            let results = sampleData.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchTerm);
+                const typeKey = item.type.toLowerCase();
+                return matchesSearch && filters[typeKey];
+            });
+
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            const tableBody = document.getElementById('resultsTable');
+            const tableWrapper = document.getElementById('tableWrapper');
+            const emptyState = document.getElementById('emptyState');
+            const resultCount = document.getElementById('resultCount');
+
+            tableBody.innerHTML = '';
+
+            if (results.length === 0) {
+                tableWrapper.style.display = 'none';
+                emptyState.style.display = 'block';
+                resultCount.textContent = '0 Results';
+                return;
+            }
+
+            tableWrapper.style.display = 'block';
+            emptyState.style.display = 'none';
+            resultCount.textContent = `${results.length} Result${results.length !== 1 ? 's' : ''}`;
+
+            results.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${item.name}</strong></td>
+                    <td><span class="type-badge type-${item.type.toLowerCase()}">${item.type}</span></td>
+                    <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span></td>
+                    <td>${item.lastUpdated}</td>
+                    <td><button class="action-btn" onclick="showDetails(${item.id})">View Details</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function showDetails(id) {
+            const item = sampleData.find(d => d.id === id);
+            if (!item) return;
+
+            const detailsPanel = document.getElementById('detailsPanel');
+            const detailsTitle = document.getElementById('detailsTitle');
+            const detailsGrid = document.getElementById('detailsGrid');
+
+            detailsTitle.textContent = `${item.name} - ${item.type} Details`;
+
+            detailsGrid.innerHTML = `
+                <div class="detail-item">
+                    <div class="detail-item-label">Name</div>
+                    <div class="detail-item-value">${item.name}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-item-label">Type</div>
+                    <div class="detail-item-value">${item.type}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-item-label">Status</div>
+                    <div class="detail-item-value">${item.status}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-item-label">Last Updated</div>
+                    <div class="detail-item-value">${item.lastUpdated}</div>
+                    <div class="detail-item-secondary">2 days ago</div>
+                </div>
+                ${item.jobs !== '-' ? `
+                <div class="detail-item">
+                    <div class="detail-item-label">Associated Jobs</div>
+                    <div class="detail-item-value">${item.jobs}</div>
+                </div>
+                ` : ''}
+                ${item.files !== '-' ? `
+                <div class="detail-item">
+                    <div class="detail-item-label">Files Used</div>
+                    <div class="detail-item-value">${item.files}</div>
+                </div>
+                ` : ''}
+                <div class="detail-item">
+                    <div class="detail-item-label">ESP Schedule Status</div>
+                    <div class="detail-item-value">${item.espStatus}</div>
+                </div>
+            `;
+
+            detailsPanel.classList.add('active');
+        }
+
+        function closeDetails() {
+            const detailsPanel = document.getElementById('detailsPanel');
+            detailsPanel.classList.remove('active');
+        }
+
+        function showAnalysis(type) {
+            alert(`${type === 'component' ? 'Component' : 'ESP'} Analysis feature will be implemented soon!\n\nThis will show ${type === 'component' ? 'program → job → file relationships' : 'ESP schedule timeline and execution history'}`);
+        }
+
+        // Initialize with empty state
+        performSearch();
+    </script>
+</body>
+</html>
