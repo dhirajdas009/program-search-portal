@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Program Search Portal</title>
+    <title>Application Support Portal</title>
     <style>
         * {
             margin: 0;
@@ -13,93 +13,98 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #e8e9eb;
+            color: #4a4a4a;
         }
 
         .header {
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            color: white;
-            padding: 20px 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #5a6c7d 0%, #475569 100%);
+            color: #e8e9eb;
+            padding: 24px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .header h1 {
             font-size: 28px;
-            font-weight: 600;
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
 
         .container {
             display: flex;
-            height: calc(100vh - 70px);
+            height: calc(100vh - 76px);
         }
 
         /* LEFT SIDEBAR */
         .sidebar {
             width: 220px;
-            background-color: #f5f5f5;
-            border-right: 1px solid #e0e0e0;
-            padding: 20px;
+            background-color: #d4d7dd;
+            border-right: 1px solid #c1c5ce;
+            padding: 24px 16px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         .sidebar-title {
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 600;
             text-transform: uppercase;
-            color: #666;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
+            color: #6b7280;
+            margin-bottom: 12px;
+            letter-spacing: 0.8px;
         }
 
         .btn-analysis {
             padding: 12px 16px;
-            border: none;
-            border-radius: 6px;
+            border: 1px solid #b0b5be;
+            border-radius: 5px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
             text-align: left;
+            background-color: #c9cbd2;
+            color: #3d3f45;
         }
 
         .btn-component {
-            background-color: #0066cc;
-            color: white;
+            background-color: #b8bcc6;
+            color: #3d3f45;
+            border-color: #9fa5b0;
         }
 
         .btn-component:hover {
-            background-color: #0052a3;
-            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
-            transform: translateY(-2px);
+            background-color: #adb3bd;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+            transform: translateY(-1px);
         }
 
         .btn-esp {
-            background-color: #6f42c1;
-            color: white;
+            background-color: #c0c4ce;
+            color: #3d3f45;
+            border-color: #adb3bd;
         }
 
         .btn-esp:hover {
-            background-color: #5a32a3;
-            box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);
-            transform: translateY(-2px);
+            background-color: #b5bac4;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+            transform: translateY(-1px);
         }
 
         /* MAIN CONTENT */
         .main-content {
             flex: 1;
-            padding: 30px;
+            padding: 28px;
             overflow-y: auto;
-            background-color: #ffffff;
+            background-color: #f0f1f3;
         }
 
         .search-section {
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
         .search-container {
@@ -116,16 +121,23 @@
         .search-input {
             width: 100%;
             padding: 12px 16px 12px 40px;
-            border: 2px solid #e0e0e0;
-            border-radius: 6px;
+            border: 1px solid #c1c5ce;
+            border-radius: 5px;
             font-size: 14px;
+            background-color: #fafbfc;
+            color: #4a4a4a;
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
             outline: none;
-            border-color: #0066cc;
-            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+            border-color: #8b9299;
+            box-shadow: 0 0 0 3px rgba(139, 146, 153, 0.1);
+            background-color: #ffffff;
+        }
+
+        .search-input::placeholder {
+            color: #9ca3af;
         }
 
         .search-icon {
@@ -133,38 +145,39 @@
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: #999;
+            color: #9ca3af;
             font-size: 16px;
         }
 
         .search-btn {
-            padding: 12px 24px;
-            background-color: #0066cc;
-            color: white;
-            border: none;
-            border-radius: 6px;
+            padding: 12px 28px;
+            background-color: #6b7581;
+            color: #e8e9eb;
+            border: 1px solid #5a6370;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
 
         .search-btn:hover {
-            background-color: #0052a3;
+            background-color: #5a6370;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
         /* FILTERS */
         .filters-section {
-            background-color: #f8f9fa;
+            background-color: #e0e3e9;
             padding: 16px;
-            border-radius: 6px;
+            border-radius: 5px;
             margin-bottom: 25px;
-            border: 1px solid #e9ecef;
+            border: 1px solid #cdd1d9;
         }
 
         .filters-title {
-            font-weight: 600;
-            font-size: 13px;
-            color: #555;
+            font-weight: 500;
+            font-size: 12px;
+            color: #5a5f67;
             margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -187,13 +200,14 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
-            accent-color: #0066cc;
+            accent-color: #6b7581;
         }
 
         .filter-option label {
             font-size: 14px;
             cursor: pointer;
             user-select: none;
+            color: #4a4a4a;
         }
 
         /* RESULTS TABLE */
@@ -203,147 +217,154 @@
 
         .results-title {
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 15px;
-            color: #333;
+            color: #3d3f45;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .results-count {
-            background-color: #e8f4fd;
-            color: #0066cc;
-            padding: 2px 8px;
+            background-color: #d4d7dd;
+            color: #5a5f67;
+            padding: 3px 10px;
             border-radius: 4px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .table-wrapper {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
+            border: 1px solid #cdd1d9;
+            border-radius: 5px;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            background-color: #ffffff;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: white;
+            background-color: #ffffff;
         }
 
         thead {
-            background-color: #f8f9fa;
-            border-bottom: 2px solid #e0e0e0;
+            background-color: #d9dce2;
+            border-bottom: 1px solid #c1c5ce;
         }
 
         th {
             padding: 14px 16px;
             text-align: left;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 13px;
-            color: #555;
+            color: #5a5f67;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
 
         td {
             padding: 14px 16px;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f1f3;
             font-size: 14px;
+            color: #4a4a4a;
         }
 
         tbody tr {
             transition: all 0.2s ease;
+            background-color: #fafbfc;
         }
 
         tbody tr:hover {
-            background-color: #f8f9fa;
+            background-color: #e8e9eb;
             cursor: pointer;
         }
 
         .type-badge {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 5px 10px;
             border-radius: 4px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
         .type-program {
-            background-color: #e8f4fd;
-            color: #0066cc;
+            background-color: #d9dce2;
+            color: #5a5f67;
+            border: 1px solid #c1c5ce;
         }
 
         .type-job {
-            background-color: #f0e8fd;
-            color: #6f42c1;
+            background-color: #d4d7dd;
+            color: #555960;
+            border: 1px solid #b8bcc6;
         }
 
         .type-file {
-            background-color: #e8fdf0;
-            color: #28a745;
+            background-color: #d9dce2;
+            color: #5a5f67;
+            border: 1px solid #c1c5ce;
         }
 
         .type-schedule {
-            background-color: #fde8e8;
-            color: #dc3545;
+            background-color: #d4d7dd;
+            color: #555960;
+            border: 1px solid #b8bcc6;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 5px 10px;
             border-radius: 4px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .status-active {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: #d4dcd2;
+            color: #5a6b59;
         }
 
         .status-running {
-            background-color: #fff3cd;
-            color: #856404;
+            background-color: #d9d4c2;
+            color: #696145;
         }
 
         .status-linked {
-            background-color: #d1ecf1;
-            color: #0c5460;
+            background-color: #d0d9de;
+            color: #5a6577;
         }
 
         .status-completed {
-            background-color: #e2e3e5;
-            color: #383d41;
+            background-color: #d4d4d4;
+            color: #555555;
         }
 
         .action-btn {
-            padding: 6px 12px;
-            background-color: #0066cc;
-            color: white;
-            border: none;
+            padding: 6px 14px;
+            background-color: #6b7581;
+            color: #e8e9eb;
+            border: 1px solid #5a6370;
             border-radius: 4px;
             cursor: pointer;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.2s ease;
         }
 
         .action-btn:hover {
-            background-color: #0052a3;
+            background-color: #5a6370;
             transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(0, 102, 204, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
         }
 
         /* DETAILS PANEL */
         .details-panel {
-            background-color: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
+            background-color: #e8e9eb;
+            border: 1px solid #cdd1d9;
+            border-radius: 5px;
             padding: 20px;
             margin-top: 25px;
             display: none;
@@ -370,14 +391,14 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 1px solid #d4d7dd;
             padding-bottom: 15px;
         }
 
         .details-title {
             font-size: 18px;
-            font-weight: 700;
-            color: #333;
+            font-weight: 500;
+            color: #3d3f45;
         }
 
         .details-close {
@@ -385,31 +406,31 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
-            color: #999;
+            color: #9ca3af;
             transition: color 0.2s ease;
         }
 
         .details-close:hover {
-            color: #333;
+            color: #4a4a4a;
         }
 
         .details-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 16px;
         }
 
         .detail-item {
-            background-color: white;
+            background-color: #f5f6f8;
             padding: 15px;
-            border-radius: 6px;
-            border-left: 4px solid #0066cc;
+            border-radius: 4px;
+            border-left: 3px solid #8b9299;
         }
 
         .detail-item-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #666;
+            font-size: 11px;
+            font-weight: 600;
+            color: #6b7280;
             text-transform: uppercase;
             margin-bottom: 8px;
             letter-spacing: 0.5px;
@@ -417,13 +438,13 @@
 
         .detail-item-value {
             font-size: 16px;
-            font-weight: 600;
-            color: #333;
+            font-weight: 500;
+            color: #3d3f45;
         }
 
         .detail-item-secondary {
             font-size: 13px;
-            color: #999;
+            color: #9ca3af;
             margin-top: 6px;
         }
 
@@ -431,7 +452,7 @@
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: #999;
+            color: #9ca3af;
         }
 
         .empty-icon {
@@ -442,11 +463,30 @@
         .empty-text {
             font-size: 16px;
             margin-bottom: 8px;
+            color: #6b7280;
         }
 
         .empty-subtext {
             font-size: 13px;
-            color: #bbb;
+            color: #b0b5be;
+        }
+
+        /* SCROLL BAR STYLING */
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: #e8e9eb;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #b8bcc6;
+            border-radius: 4px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb:hover {
+            background: #a8adb7;
         }
 
         /* RESPONSIVENESS */
@@ -485,7 +525,7 @@
 <body>
     <!-- HEADER -->
     <div class="header">
-        <h1>🔍 Program Search Portal</h1>
+        <h1>Application Support Portal</h1>
     </div>
 
     <div class="container">
@@ -569,7 +609,7 @@
             <!-- DETAILS PANEL -->
             <div class="details-panel" id="detailsPanel">
                 <div class="details-header">
-                    <div class="details-title" id="detailsTitle">Program Details</div>
+                    <div class="details-title" id="detailsTitle">Application Details</div>
                     <button class="details-close" onclick="closeDetails()">✕</button>
                 </div>
                 <div class="details-grid" id="detailsGrid">
